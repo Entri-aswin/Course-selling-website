@@ -1,12 +1,14 @@
 import express from "express";
+import { checkUser, userCreate, userLogin, userProfile } from "../../controllers/userController.js";
+import { authUser } from "../../middlewares/authUser.js";
 const router = express.Router();
 
-router.get("/create", async (req, res, next) => {
-    console.log("user create route accessed");
-});
+router.post("/create", userCreate);
+router.post("/login", userLogin);
+router.get("/profile/:id", authUser, userProfile);
 
-router.post("/logout", async (req, res, next) => {
-    console.log("user post method accessed");
-});
+
+router.get("/check-user", authUser, checkUser);
+
 
 export default router;

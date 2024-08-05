@@ -16,11 +16,10 @@ const courseSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-
     instructor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Instructor",
     },
 });
 
-export const Course = mongoose.model("User", userSchema);
+export const Course = mongoose.model("Course", courseSchema);

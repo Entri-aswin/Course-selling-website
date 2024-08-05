@@ -1,16 +1,11 @@
-import express from 'express'
+import express from "express";
+import { createCourse, getCourseList, updateCourse } from "../../controllers/courserController.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/',async(req,res,next)=>{
-    console.log('user get method accessed');
-    
-})
-router.post('/',async(req,res,next)=>{
-    console.log('user post method accessed');
-    
-})
+router.get("/courseList",  getCourseList);
+router.post("/create", createCourse);
+router.put("/update/:id" , updateCourse);
+router.delete("/delete");
 
-
-
-export default router
+export default router;
