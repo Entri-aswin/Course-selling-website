@@ -3,9 +3,10 @@ import { checkUser, userCreate, userLogin, userProfile } from "../../controllers
 import { authUser } from "../../middlewares/authUser.js";
 const router = express.Router();
 
-router.post("/create", userCreate);
+router.post("/create",  userCreate);
 router.post("/login", userLogin);
 router.get("/profile/:id", authUser, userProfile);
+
 
 
 router.get("/check-user", authUser, checkUser);

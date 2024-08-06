@@ -61,6 +61,15 @@ export const userLogin = async (req, res, next) => {
         res.status(error.status || 500).json({ message: error.message || "Internal server error" });
     }
 };
+export const userLogout = async (req, res, next) => {
+    try {
+        res.clearCookies("token");
+
+        res.json({ success: true, message: "user logout successfully" });
+    } catch (error) {
+        res.status(error.status || 500).json({ message: error.message || "Internal server error" });
+    }
+};
 
 export const userProfile = async (req, res, next) => {
     try {
@@ -85,4 +94,3 @@ export const checkUser = async (req, res, next) => {
         res.status(error.status || 500).json({ message: error.message || "Internal server error" });
     }
 };
-

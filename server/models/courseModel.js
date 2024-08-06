@@ -6,14 +6,14 @@ const courseSchema = new mongoose.Schema({
         required: true,
     },
     desc: {
-        type: [String, "please enter a string"],
+        type: String,
     },
     image: {
         type: String,
         default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaLGtEd0MJro4X9wDmT2vrvLT-HjKkyyWVmg&s",
     },
     duration: {
-        type: Number,
+        type: String,
         required: true,
     },
     instructor: {
