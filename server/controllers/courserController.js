@@ -1,5 +1,6 @@
 import { cloudinaryInstance } from "../config/cloudinaryConfig.js";
 import { Course } from "../models/courseModel.js";
+import { Instructor } from "../models/instructorModel.js";
 
 export const getCourseList = async (req, res, next) => {
     try {
@@ -14,6 +15,12 @@ export const getCourseList = async (req, res, next) => {
 export const createCourse = async (req, res, next) => {
     try {
         const { title, desc, duration, instructor } = req.body;
+        const user = req.user;
+        let currentInstructor;
+
+        if (user.role == "instructor") {
+            currentInstructor = await Instructor.findOne({ email: user.email });
+        }
 
         if (!req.file) {
             return res.status(400).json({ message: "image not visible" });
@@ -32,10 +39,15 @@ export const createCourse = async (req, res, next) => {
 
         console.log(uploadResult);
 
-        const newCourse = new Course({ title, desc, duration, instructor });
+        const newCourse = new Course({ title, desc, duration });
         if (uploadResult?.url) {
             newCourse.image = uploadResult.url;
         }
+
+        if (user.role == "instructor") {
+            newCourse.instructor = currentInstructor;
+        }
+
         await newCourse.save();
 
         res.json({ success: true, message: "new course created successfully", data: newCourse });
@@ -46,10 +58,10 @@ export const createCourse = async (req, res, next) => {
 
 export const updateCourse = async (req, res, next) => {
     try {
-        const { title, desc,  duration, instructor } = req.body;
+        const { title, desc, duration, instructor } = req.body;
         const { id } = req.params;
 
-        const updatedCourse = await Course.findByIdAndUpdate(id, { title, desc,  duration, instructor }, { new: true });
+        const updatedCourse = await Course.findByIdAndUpdate(id, { title, desc, duration, instructor }, { new: true });
 
         res.json({ success: true, message: "course updated", data: updatedCourse });
     } catch (error) {
