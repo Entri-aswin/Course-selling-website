@@ -81,12 +81,23 @@ export const instructorUpdate = async (req, res, next) => {
     try {
         const { name, email, password, courses } = req.body;
 
+        const user = req.user;
+
         const { id } = req.params;
-        const updateInstructor = await Instructor.findByIdAndUpdate(
-            id,
-            { name, email, password, $push: { courses: courses } },
-            { new: true }
-        );
+        // const updateInstructor = await Instructor.findByIdAndUpdate(
+        //     id,
+        //     { name, email, password, $push: { courses: courses } },
+        //     { new: true }
+        // );
+
+        const updateInstructor = await Instructor.findOne({ email: user.email }, "-password -email")
+            .populate("courses")
+            .select("-courses.image");
+        console.log(updateInstructor, "====== instructor");
+        updateInstructor.courses.push(courses);
+        updateInstructor.save();
+
+        // updateInstructor.courses.
 
         res.json({ success: true, message: "instructor updated successfully", data: updateInstructor });
     } catch (error) {

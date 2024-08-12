@@ -1,6 +1,7 @@
 import { cloudinaryInstance } from "../config/cloudinaryConfig.js";
 import { Course } from "../models/courseModel.js";
 import { Instructor } from "../models/instructorModel.js";
+import { imageUploadCloudinary } from "../utils/cloudinary.js";
 
 export const getCourseList = async (req, res, next) => {
     try {
@@ -14,40 +15,37 @@ export const getCourseList = async (req, res, next) => {
 
 export const createCourse = async (req, res, next) => {
     try {
-        const { title, desc, duration, instructor } = req.body;
-        const user = req.user;
+        const { title, desc, duration } = req.body;
+        const { user } = req;
         let currentInstructor;
+        let imageUrl;
 
-        if (user.role == "instructor") {
-            currentInstructor = await Instructor.findOne({ email: user.email });
-        }
-
-        if (!req.file) {
-            return res.status(400).json({ message: "image not visible" });
-        }
-
+        //check course exist
         const course = await Course.findOne({ title: title });
-
         if (course) {
             return res.status(400).json({ message: "course already exist" });
         }
 
-        // Upload an image
-        const uploadResult = await cloudinaryInstance.uploader.upload(req.file.path).catch((error) => {
-            console.log(error);
-        });
-
-        console.log(uploadResult);
-
-        const newCourse = new Course({ title, desc, duration });
-        if (uploadResult?.url) {
-            newCourse.image = uploadResult.url;
-        }
-
+        //check role
         if (user.role == "instructor") {
-            newCourse.instructor = currentInstructor;
+            currentInstructor = await Instructor.findOne({ email: user.email });
         }
 
+        // Upload an image
+        if (req.file) {
+            imageUrl = await imageUploadCloudinary(req.file.path);
+            console.log(imageUrl);
+            
+        }
+
+        //create new course
+        const newCourse = new Course({
+            title,
+            desc,
+            duration,
+            image: imageUrl && imageUrl,
+            instructor: user.role === "instructor" && currentInstructor,
+        });
         await newCourse.save();
 
         res.json({ success: true, message: "new course created successfully", data: newCourse });
@@ -61,7 +59,9 @@ export const updateCourse = async (req, res, next) => {
         const { title, desc, duration, instructor } = req.body;
         const { id } = req.params;
 
-        const updatedCourse = await Course.findByIdAndUpdate(id, { title, desc, duration, instructor }, { new: true });
+        // const updatedCourse = await Course.findByIdAndUpdate(id, { title, desc, duration, instructor }, { new: true });
+
+    
 
         res.json({ success: true, message: "course updated", data: updatedCourse });
     } catch (error) {
