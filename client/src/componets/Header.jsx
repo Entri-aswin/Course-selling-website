@@ -7,18 +7,22 @@ export const Header = () => {
     return (
         <div className="flex items-center justify-between w-full h-32 px-20 shadow-xl">
             <div>
-                <h1 className="text-4xl font-bold">Logo</h1>
+                <Link to={"/"}>
+                    <h1 className="text-4xl font-bold">Logo</h1>
+                </Link>
             </div>
 
             <nav className="flex gap-20 font-semibold">
                 <Link to={"/"}>Home</Link>
-                <Link>About</Link>
-                <Link>Courses</Link>
+                <Link to={"/about"}>About</Link>
+                <Link to={"/user/course"}>Courses</Link>
             </nav>
 
             <div className="flex items-center gap-8">
                 <DarkMode />
-                <button className="btn btn-primary">Join Us</button>
+                <Link to={"/signup"}>
+                    <button className="btn btn-primary">Join Us</button>
+                </Link>
             </div>
         </div>
     );

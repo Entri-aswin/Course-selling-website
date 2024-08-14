@@ -7,6 +7,8 @@ import { UserLayout } from "../layouts/UserLayout";
 import { CoursePage } from "../pages/user/CoursePage";
 import { CourseDetailsPage } from "../pages/user/CourseDetailsPage";
 import { ErrorPage } from "../pages/user/ErrorPage";
+import { UserAuth } from "./protectedRoutes/UserAuth";
+import { ProfilePage } from "../pages/user/ProfilePage";
 
 export const router = createBrowserRouter([
     {
@@ -19,26 +21,46 @@ export const router = createBrowserRouter([
                 element: <HomePage />,
             },
             {
-                path: "/login",
+                path: "about",
+                element: <h1>About page</h1>,
+            },
+            {
+                path: "login",
                 element: <LoginPage />,
             },
             {
-                path: "/signup",
+                path: "signup",
                 element: <SignupPage />,
             },
         ],
     },
     {
         path: "user",
-        element: <UserLayout />,
+        element: (
+            <UserAuth>
+                <UserLayout />
+            </UserAuth>
+        ),
         children: [
             {
                 path: "course",
                 element: <CoursePage />,
             },
             {
+                path: "profile",
+                element: <ProfilePage />,
+            },
+            {
+                path: "my-learnings",
+                element: <h1>Learning dashboard</h1>,
+            },
+            {
                 path: "course-details/:id",
                 element: <CourseDetailsPage />,
+            },
+            {
+                path: "cart",
+                element: <h1>Cart-page</h1>,
             },
         ],
     },
