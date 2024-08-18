@@ -10,7 +10,7 @@ export const userLogin = async (data) => {
         });
         return response?.data;
     } catch (error) {
-        toast.error('Log-in Success')
+        toast.error("Log-in Success");
         console.log(error);
     }
 };
@@ -22,10 +22,26 @@ export const userLogout = async () => {
         });
         return response?.data;
     } catch (error) {
-        toast.error('Log-out Failed ')
+        toast.error("Log-out Failed ");
         console.log(error);
     }
 };
+
+// export const fetchUserProfile = async () => {
+//     try {
+//         const response = await axiosInstance({
+//             url: "/user/profile",
+//             method: "GET",
+//         });
+
+//         console.log(response, "====response");
+
+//         return response?.data;
+//     } catch (error) {
+//         console.log("error fetching user data");
+//         toast.error("error fetching user data");
+//     }
+// };
 
 export const userCheck = async () => {
     try {

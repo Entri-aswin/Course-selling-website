@@ -12,6 +12,16 @@ export const getCourseList = async (req, res, next) => {
         res.status(error.status || 500).json({ message: error.message || "Internal server error" });
     }
 };
+export const getCourseDetails = async (req, res, next) => {
+    try {
+        const {id}= req.params;
+        const courseList = await Course.findById(id);
+
+        res.json({ success: true, message: "fetched course list", data: courseList });
+    } catch (error) {
+        res.status(error.status || 500).json({ message: error.message || "Internal server error" });
+    }
+};
 
 export const createCourse = async (req, res, next) => {
     try {

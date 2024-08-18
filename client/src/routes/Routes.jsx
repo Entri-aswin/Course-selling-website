@@ -9,6 +9,8 @@ import { CourseDetailsPage } from "../pages/user/CourseDetailsPage";
 import { ErrorPage } from "../pages/user/ErrorPage";
 import { UserAuth } from "./protectedRoutes/UserAuth";
 import { ProfilePage } from "../pages/user/ProfilePage";
+import { InstructorLoginPage } from "../pages/instructor/InstructorLogin";
+import { CreateCoursePage } from "../pages/instructor/CreateCoursePage";
 
 export const router = createBrowserRouter([
     {
@@ -61,6 +63,36 @@ export const router = createBrowserRouter([
             {
                 path: "cart",
                 element: <h1>Cart-page</h1>,
+            },
+        ],
+    },
+    {
+        path: "instructor-login",
+        element: <InstructorLoginPage />,
+    },
+    {
+        path: "instructor",
+        element: (
+            <UserAuth>
+                <UserLayout />
+            </UserAuth>
+        ),
+        children: [
+            {
+                path: "course",
+                element: <CoursePage />,
+            },
+            {
+                path: "profile",
+                element: <ProfilePage />,
+            },
+            {
+                path: "course-details/:id",
+                element: <CourseDetailsPage />,
+            },
+            {
+                path: "create-course",
+                element: <CreateCoursePage/>
             },
         ],
     },

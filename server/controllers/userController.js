@@ -73,8 +73,10 @@ export const userLogout = async (req, res, next) => {
 
 export const userProfile = async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const useData = await User.findById(id).select("-password");
+        const user = req.user;
+
+        const useData = await User.findOne({email:user.email}).select("-password");
+        // const useData = await User.findById(id).select("-password");
 
         res.json({ success: true, message: "user data fetched", data: useData });
     } catch (error) {
