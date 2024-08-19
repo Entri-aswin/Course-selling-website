@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { axiosInstance } from "../../config/axiosInstance";
+import { useDispatch, useSelector } from "react-redux";
 
 export const CourseDetailsPage = () => {
     const [courseDetails, setCourseDetails] = useState({});
     const { id } = useParams();
+
+    const { courses } = useSelector((state) => state.course);
 
     const fetchCourseDetails = async () => {
         try {
@@ -18,7 +21,18 @@ export const CourseDetailsPage = () => {
         }
     };
 
-    console.log("courseDetails====", courseDetails);
+    // console.log("courseDetails====", courseDetails);
+
+    // const fetchCourseDetails = () => {
+    //     console.log("courses====", courses);
+    //     const myCourse = courses.find((value) => {
+    //         console.log(value._id == id);
+    //         console.log(value._id);
+    //     });
+
+    //     console.log(id, "=====id");
+    //     setCourseDetails(myCourse);
+    // };
 
     useEffect(() => {
         fetchCourseDetails();
@@ -31,7 +45,6 @@ export const CourseDetailsPage = () => {
             </div>
             <div className="w-8/12">
                 <h1 className="font-bold text-4xl">{courseDetails?.title}</h1>
-
             </div>
         </div>
     );

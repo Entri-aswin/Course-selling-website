@@ -104,3 +104,15 @@ export const instructorUpdate = async (req, res, next) => {
         res.status(error.status || 500).json({ message: error.message || "Internal server error" });
     }
 };
+export const getFullDetails = async (req, res, next) => {
+    try {
+        const { email } = req.user;
+
+        const instructorDetails = await Instructor.find({ email: email }).populate('courses');
+        res.json({
+            data: instructorDetails,
+        });
+    } catch (error) {
+        res.status(error.status || 500).json({ message: error.message || "Internal server error" });
+    }
+};

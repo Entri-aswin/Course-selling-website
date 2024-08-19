@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { axiosInstance } from "../../config/axiosInstance";
 import { CourseCard } from "../../componets/ui/Cards";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCourseList } from "../../redux/features/courseSlice";
 
 export const CoursePage = () => {
-    const [courses, setCourses] = useState([]);
+
+    const dispatch = useDispatch();
+    const { courses } = useSelector((state) => state.course);
 
     const fetchCourses = async () => {
         try {
@@ -12,7 +16,9 @@ export const CoursePage = () => {
                 url: "/course/courseList",
                 method: "GET",
             });
-            setCourses(response?.data?.data);
+            
+            dispatch(fetchCourseList(response?.data?.data));
+            // setCourses(response?.data?.data);
         } catch (error) {
             console.log(error);
             toast.error("failed fetching products");

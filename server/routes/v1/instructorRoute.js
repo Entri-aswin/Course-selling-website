@@ -1,6 +1,7 @@
 import express from "express";
 import {
     checkInstructor,
+    getFullDetails,
     instructorCreate,
     instructorLogin,
     instructorProfile,
@@ -18,6 +19,7 @@ router.get("/check-instructor", authInstructor, checkInstructor);
 
 router.put("/update/:id", authInstructor, instructorUpdate);
 
+router.get('/fullDetails',authInstructor, getFullDetails)
 
 
 
