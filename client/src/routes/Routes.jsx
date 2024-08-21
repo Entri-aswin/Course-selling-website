@@ -11,6 +11,9 @@ import { UserAuth } from "./protectedRoutes/UserAuth";
 import { ProfilePage } from "../pages/user/ProfilePage";
 import { InstructorLoginPage } from "../pages/instructor/InstructorLogin";
 import { CreateCoursePage } from "../pages/instructor/CreateCoursePage";
+import { CartPage } from "../pages/user/CartPage";
+import { Success } from "../pages/user/Success";
+import { Cancel } from "../pages/user/Cancel";
 
 export const router = createBrowserRouter([
     {
@@ -62,7 +65,15 @@ export const router = createBrowserRouter([
             },
             {
                 path: "cart",
-                element: <h1>Cart-page</h1>,
+                element: <CartPage />,
+            },
+            {
+                path: "payment/success",
+                element: <Success />,
+            },
+            {
+                path: "payment/cancel",
+                element: <Cancel />,
             },
         ],
     },
@@ -92,7 +103,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "create-course",
-                element: <CreateCoursePage/>
+                element: <CreateCoursePage />,
             },
         ],
     },

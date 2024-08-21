@@ -11,7 +11,7 @@ export const CourseCard = ({ course }) => {
                 <h2 className="card-title">{course.title} </h2>
                 <p>{course?.desc} </p>
                 <div className="card-actions justify-end">
-                    <Link to={`/user/course-details/${course._id} `}>
+                    <Link to={`/user/course-details/${course._id}   `}>
                         <button className="btn btn-primary">More Details</button>
                     </Link>
                 </div>
