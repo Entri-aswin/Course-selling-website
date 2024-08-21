@@ -4,34 +4,10 @@ import { axiosInstance } from "../../config/axiosInstance";
 import { CourseCard } from "../../componets/ui/Cards";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCourseList } from "../../redux/features/courseSlice";
-import { Course } from "../../../../server/models/courseModel";
 
 export const CoursePage = () => {
     const dispatch = useDispatch();
     const { courses } = useSelector((state) => state.course);
-    const [searchVal, setSearchValue] = useState("");
-
-
-
-    const serchCourses = async () => {
-        const response = await axiosInstance({
-            params: searchVal,
-            url: "",
-            method: "GET",
-        });
-    };
-
-    useEffect(()=>{
-        setTimeout(() => {
-            serchCourses()
-        }, 500);
-
-
-    })
-
-    // const {searchValue} =req.params
-    // Course.find({ title: { $regex: searchValue, $options: "i" } })
-
 
 
     const fetchCourses = async () => {
