@@ -26,7 +26,11 @@ export const instructorCreate = async (req, res, next) => {
         //create token
         const token = generateUserToken(email, "instructor");
 
-        res.cookie("token", token);
+        res.cookie("token", token, {
+            sameSite: "None",
+            secure: true,
+            httpOnly: true,
+        });
         res.json({ success: true, message: "Instructor created successfully" });
     } catch (error) {
         res.status(error.status || 500).json({ message: error.message || "Internal server error" });
@@ -46,7 +50,11 @@ export const instructorLogin = async (req, res, next) => {
         //create token
         const token = generateUserToken(email, "instructor");
 
-        res.cookie("token", token);
+        res.cookie("token", token, {
+            sameSite: "None",
+            secure: true,
+            httpOnly: true,
+        });
         res.json({ success: true, message: "Instructor login successfully" });
     } catch (error) {
         res.status(error.status || 500).json({ message: error.message || "Internal server error" });
@@ -108,7 +116,7 @@ export const getFullDetails = async (req, res, next) => {
     try {
         const { email } = req.user;
 
-        const instructorDetails = await Instructor.find({ email: email }).populate('courses');
+        const instructorDetails = await Instructor.find({ email: email }).populate("courses");
         res.json({
             data: instructorDetails,
         });

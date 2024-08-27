@@ -26,7 +26,11 @@ export const userCreate = async (req, res, next) => {
         //create token
         const token = generateUserToken(email);
 
-        res.cookie("token", token);
+        res.cookie("token", token, {
+            sameSite: "None",
+            secure: true,
+            httpOnly: true,
+        });
         res.json({ success: true, message: "user created successfully" });
     } catch (error) {
         res.status(error.status || 500).json({ message: error.message || "Internal server error" });
@@ -54,7 +58,11 @@ export const userLogin = async (req, res, next) => {
 
         const token = generateUserToken(email);
 
-        res.cookie("token", token);
+        res.cookie("token", token, {
+            sameSite: "None",
+            secure: true,
+            httpOnly: true,
+        });
 
         res.json({ success: true, message: "user login successfully" });
     } catch (error) {
@@ -75,7 +83,7 @@ export const userProfile = async (req, res, next) => {
     try {
         const user = req.user;
 
-        const useData = await User.findOne({email:user.email}).select("-password");
+        const useData = await User.findOne({ email: user.email }).select("-password");
         // const useData = await User.findById(id).select("-password");
 
         res.json({ success: true, message: "user data fetched", data: useData });
