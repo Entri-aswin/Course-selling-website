@@ -9,7 +9,7 @@ const app = express();
 
 app.use(
     cors({
-        origin: ["https://elearning-pjvtuibps-entri-aswins-projects.vercel.app", "http://localhost:5173"],
+        origin: ["https://course-selling-website-eta.vercel.app", "http://localhost:5173"],
         credentials: true,
     })
 );
