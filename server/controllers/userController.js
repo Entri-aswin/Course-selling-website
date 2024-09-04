@@ -25,7 +25,7 @@ export const userCreate = async (req, res, next) => {
 
         //create token
         const token = generateUserToken(email);
-        
+
         res.cookie("token", token, {
             sameSite: "None",
             secure: true,
@@ -73,7 +73,11 @@ export const userLogin = async (req, res, next) => {
 };
 export const userLogout = async (req, res, next) => {
     try {
-        res.clearCookie("token");
+        res.clearCookie("token", {
+            sameSite: "None",
+            secure: true,
+            httpOnly: true,
+        });
 
         res.json({ success: true, message: "user logout successfully" });
     } catch (error) {
